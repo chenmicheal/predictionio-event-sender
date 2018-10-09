@@ -9,12 +9,12 @@ object Main {
 
     val (movies, ratings) = this.loadMoviesAndRatings()
     val url = "http://localhost:7070"
-    val token = "QRaEzksG99fcakfU0X2j-sMGTYluq0SGAjFHImfyXk-zVNr06RvhQ-Zx07s0VMPl"
+    val token = "hs6Vdej97TabLj_uMx2f3zwA4HiNgKMwBT3IUyxt2jiTIX__U0SdkWEmMe252i2Q"
     val predictionIOClient = new PredictionIOClient(url, token)
 
-    //predictionIOClient.sendMovies(movies)
+    predictionIOClient.sendMovies(movies)
     predictionIOClient.sendUsers(ratings)
-    //predictionIOClient.sendRatings(ratings.limit(20000))
+    predictionIOClient.sendRatings(ratings.limit(20000))
 
     predictionIOClient.close()
   }
