@@ -8,8 +8,8 @@ object Main {
     Logger.getLogger("org").setLevel(Level.FATAL)
 
     val (movies, ratings) = this.loadMoviesAndRatings()
-    val url = "http://localhost:7070"
-    val token = "hs6Vdej97TabLj_uMx2f3zwA4HiNgKMwBT3IUyxt2jiTIX__U0SdkWEmMe252i2Q"
+    val url = "INSERT_URL_HERE"
+    val token = "INSERT_APP_TOKEN_HERE"
     val predictionIOClient = new PredictionIOClient(url, token)
 
     predictionIOClient.sendMovies(movies)
