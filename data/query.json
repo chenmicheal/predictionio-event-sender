@@ -1,0 +1,12 @@
+{
+  "item": "Iron Man (2008)",
+  "fields": [{
+    "name": "name",
+    "values": ["Captain America: The First Avenger (2011)", "Avengers, The (2012)", "Kiss Kiss Bang Bang (2005)"],
+    "bias": 1000
+  },{
+    "name": "genres",
+    "values": ["Sci-Fi"],
+    "bias": 20
+  }]
+}
