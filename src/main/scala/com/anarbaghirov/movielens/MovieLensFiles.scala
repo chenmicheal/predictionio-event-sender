@@ -1,6 +1,6 @@
 package com.anarbaghirov.movielens
 
 private object MovieLensFiles {
-  val movies = "/Users/anarbaghirov/Documents/UdemyRecommendationSystemsWithML/ml-latest-small/movies.csv"
-  val ratings = "/Users/anarbaghirov/Documents/UdemyRecommendationSystemsWithML/ml-latest-small/ratings.csv"
+  val movies = "data/movies.csv"
+  val ratings = "data/ratings.csv"
 }
