@@ -22,10 +22,25 @@ object Main {
 
   def sendBatchEvents(client: PredictionIOClient): Unit = {
     val events = this.loadMoviesAndRatingsEvents()
+    var cnt = 0
 
-    events.ratings foreach { rating => client createEvents rating }
-    events.movies foreach { movies => client createEvents movies }
-    events.users foreach { users => client createEvents users }
+    events.users foreach { partition =>
+      cnt = cnt + 1
+      client createEvents partition
+      println(s"Events have been send to server $cnt")
+    }
+
+    events.movies foreach { partition =>
+      cnt = cnt + 1
+      client createEvents partition
+      println(s"Events have been send to server $cnt")
+    }
+
+    events.ratings foreach { partition =>
+      cnt = cnt + 1
+      client createEvents partition
+      println(s"Events have been send to server $cnt")
+    }
   }
 
   def sendSingleEvents(client: PredictionIOClient): Unit = {
@@ -46,7 +61,7 @@ object Main {
 
       EventCreator.rating(userId, movieName, Predef.double2Double(ratingValue))
     }
-    val ratingEventsPartitionedList = Lists.partition(ratingEvents.toList.asJava, 10000)
+    val ratingEventsPartitionedList = Lists.partition(ratingEvents.toList.asJava, 50)
 
     val movieEvents = movies collect() map { movie =>
       val movieId = movie.getInt(0).toString
@@ -56,14 +71,14 @@ object Main {
 
       EventCreator.movie(movieId, movieName, genres, year)
     }
-    val movieEventsPartitioned = Lists.partition(movieEvents.toList.asJava, 10000)
+    val movieEventsPartitioned = Lists.partition(movieEvents.toList.asJava, 50)
 
     val users = ratings.groupBy(ratings.col("userId")).count().collect() map { user =>
       val userId = user.getInt(0).toString
 
       EventCreator.user(userId)
     }
-    val userEventsPartitioned = Lists.partition(users.toList.asJava, 10000)
+    val userEventsPartitioned = Lists.partition(users.toList.asJava, 50)
 
     Events(ratingEventsPartitionedList, movieEventsPartitioned, userEventsPartitioned)
   }
