@@ -8,10 +8,15 @@ import org.apache.spark.sql.types.{ArrayType, DoubleType, IntegerType, StringTyp
 object MovieLens {
   private implicit def sparSessionToSS(s: SparkSession): SparkSessionImprovements = new SparkSessionImprovements(s)
 
+  private object MLFiles {
+    val movies = "data/movies.csv"
+    val ratings = "data/ratings.csv"
+  }
+
   def movies(sparkSession: SparkSession): sql.DataFrame = {
     import sparkSession.implicits._
 
-    val file = sparkSession.loadCSV(MovieLensFiles.movies)
+    val file = sparkSession.loadCSV(MLFiles.movies)
     val arrayContainsNull = true
     val movies = file
       .select(
@@ -28,7 +33,7 @@ object MovieLens {
   def ratings(sparkSession: SparkSession): sql.DataFrame = {
     import sparkSession.implicits._
 
-    val file = sparkSession.loadCSV(MovieLensFiles.ratings)
+    val file = sparkSession.loadCSV(MLFiles.ratings)
     val ratings = file
       .select(
         $"userId".as("userId").cast(IntegerType),
